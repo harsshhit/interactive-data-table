@@ -7,13 +7,20 @@ import DataTable from "./DataTable";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-async function fetchData(page: number, filter: string) {
+type Data = {
+  items: any[];
+  totalPages: number;
+  total: number;
+};
+
+const fetchData = async (page: number, filter: string): Promise<Data> => {
   const res = await fetch(`/api/data?page=${page}&filter=${filter}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
   return res.json();
-}
+};
+
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -30,16 +37,17 @@ export default function DashboardPage() {
     }
   }, [router]);
 
-  const {
-    data,
-    error,
-    isLoading: isDataLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ["tableData", page, filter],
-    queryFn: () => fetchData(page, filter),
-    keepPreviousData: true,
-  });
+ const {
+   data,
+   error,
+   isLoading: isDataLoading,
+   isFetching,
+ } = useQuery<Data, Error>({
+   queryKey: ["tableData", page, filter],
+   queryFn: () => fetchData(page, filter),
+   keepPreviousData: true,
+ });
+
 
   const TableLoadingState = () => (
     <div className="flex flex-col items-center justify-center h-[400px] bg-white/50">
