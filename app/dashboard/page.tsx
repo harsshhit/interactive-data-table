@@ -7,11 +7,21 @@ import DataTable from "./DataTable";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+type DataItem = {
+  id: string;
+  name: string;
+  description: string;
+  // [key: string]: any;
+};
+
 type Data = {
-  items: any[];
+  items: DataItem[];
   totalPages: number;
   total: number;
 };
+
+// Update DataTableProps and other definitions accordingly
+
 
 const fetchData = async (page: number, filter: string): Promise<Data> => {
   const res = await fetch(`/api/data?page=${page}&filter=${filter}`);
@@ -45,7 +55,6 @@ export default function DashboardPage() {
  } = useQuery<Data, Error>({
    queryKey: ["tableData", page, filter],
    queryFn: () => fetchData(page, filter),
-  //  keepPreviousData: true,
  });
 
 
