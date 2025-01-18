@@ -45,7 +45,7 @@ export default function DashboardPage() {
  } = useQuery<Data, Error>({
    queryKey: ["tableData", page, filter],
    queryFn: () => fetchData(page, filter),
-   keepPreviousData: true,
+  //  keepPreviousData: true,
  });
 
 
