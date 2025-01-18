@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
@@ -35,7 +35,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">login </h1>
+          <h1 className="text-4xl font-bold text-gray-900">Login</h1>
         </div>
 
         <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -51,7 +51,7 @@ export default function LoginPage() {
                 <Input
                   id="username"
                   type="text"
-                  placeholder="username =  demo "
+                  placeholder="username = demo"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="h-11 px-4 transition-all duration-200 border-gray-200 hover:border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
@@ -69,7 +69,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="password = demo "
+                  placeholder="password = demo"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="h-11 px-4 transition-all duration-200 border-gray-200 hover:border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
@@ -118,7 +118,7 @@ export default function LoginPage() {
               </Button>
 
               <div className="text-center text-sm text-gray-600">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <button
                   type="button"
                   className="text-indigo-600 hover:text-indigo-500 font-medium"
@@ -129,8 +129,8 @@ export default function LoginPage() {
             </form>
           </CardContent>
         </Card>
-        <div className="text-center p-4     text-gray-600">
-          This a dummy login form
+        <div className="text-center p-4 text-gray-600">
+          This is a dummy login form
         </div>
       </div>
     </div>

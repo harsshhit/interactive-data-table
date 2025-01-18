@@ -2,6 +2,19 @@ import { NextResponse } from "next/server";
 
 const ITEMS_PER_PAGE = 50;
 
+interface TableColumn {
+  label: string;
+}
+
+interface TableRow {
+  c: { v: string | number | null }[]; 
+}
+
+interface TableData {
+  cols: TableColumn[];
+  rows: TableRow[];
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -12,30 +25,30 @@ export async function GET(request: Request) {
       "https://docs.google.com/spreadsheets/d/1vwc803C8MwWBMc7ntCre3zJ5xZtG881HKkxlIrwwxNs/gviz/tq?tqx=out:json"
     );
     const text = await response.text();
-    const data = JSON.parse(text.substring(47).slice(0, -2));
+    const jsonData = text.substring(47).slice(0, -2); 
+    const data: { table: TableData } = JSON.parse(jsonData);
 
     if (data && data.table && data.table.rows) {
-      let formattedData = data.table.rows.map((row: any) => {
-        const obj: Record<string, any> = {};
-        data.table.cols.forEach((col: any, index: number) => {
-          obj[col.label] = row.c[index] ? row.c[index].v : "";
+      const formattedData = data.table.rows.map((row) => {
+        const obj: Record<string, string | number | null> = {};
+        data.table.cols.forEach((col, index) => {
+          obj[col.label] = row.c[index]?.v || ""; 
         });
         return obj;
       });
 
-      if (filter) {
-        formattedData = formattedData.filter(
-          (item: any) =>
-            item["Domain"] &&
-            item["Domain"].toLowerCase().includes(filter.toLowerCase())
-        );
-      }
+      const filteredData = filter
+        ? formattedData.filter((item) =>
+            (item["Domain"] as string)
+              ?.toLowerCase()
+              .includes(filter.toLowerCase())
+          )
+        : formattedData;
 
-      const totalItems = formattedData.length;
+      const totalItems = filteredData.length;
       const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
       const startIndex = (page - 1) * ITEMS_PER_PAGE;
-      const paginatedData = formattedData.slice(
+      const paginatedData = filteredData.slice(
         startIndex,
         startIndex + ITEMS_PER_PAGE
       );
@@ -61,4 +74,3 @@ export async function GET(request: Request) {
     );
   }
 }
-

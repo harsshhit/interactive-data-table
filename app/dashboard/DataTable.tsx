@@ -36,22 +36,23 @@ export default function DataTable({
     direction: "asc",
   });
 
-  const sortedData = useMemo(() => {
-    if (!data || data.length === 0) return [];
-    let sortableData = [...data];
-    if (sortConfig.key) {
-      sortableData.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortableData;
-  }, [data, sortConfig]);
+ const sortedData = useMemo(() => {
+  if (!data || data.length === 0) return [];
+  const sortableData = [...data]; 
+  if (sortConfig.key) {
+    sortableData.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+  return sortableData;
+}, [data, sortConfig]);
+
 
   const parentRef = React.useRef<HTMLDivElement>(null);
 
