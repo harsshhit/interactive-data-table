@@ -20,7 +20,6 @@ type Data = {
   total: number;
 };
 
-// Update DataTableProps and other definitions accordingly
 
 
 const fetchData = async (page: number, filter: string): Promise<Data> => {

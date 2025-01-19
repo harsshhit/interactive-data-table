@@ -21,7 +21,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     await new Promise((resolve) => setTimeout(resolve, 800));
-
+    // this is a dummy login page i made , main focus was on to fetch data fro sheet without any external api's
     if (username === "demo" && password === "demo") {
       localStorage.setItem("isLoggedIn", "true");
       router.push("/dashboard");
